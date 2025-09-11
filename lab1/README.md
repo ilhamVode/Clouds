@@ -132,6 +132,8 @@ server {
 
 <img width="2491" height="865" alt="image" src="https://github.com/user-attachments/assets/73cfbffc-058b-4982-9545-db700c765384" />
 
+<img width="2484" height="389" alt="image" src="https://github.com/user-attachments/assets/4438d4f2-8576-4d23-a6ff-b4e8fde647d2" />
+
 #### Делаем исключение для нашего сайта и он теперь работает!
 
 #### Так же "что угодно еще под требования проекта" можно добавить кастомные страницы для ошибок с помощью
