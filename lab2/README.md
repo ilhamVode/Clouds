@@ -12,15 +12,15 @@
 ## Плохой Dockerfile
 
 ```bash
-FROM python: latest
+FROM python:latest
 
 RUN apt-get update
-RUN pip install html
-RUN pip install nginx
+RUN pip install requests
+RUN apt-get install -y nginx
 
-СOPY . /app
+COPY app/ /app
 
-CMD ["python", "/.../main.py"]
+CMD ["python", "/app/main.py"]
 
 ```
 #### FROM python: latest
@@ -29,17 +29,19 @@ CMD ["python", "/.../main.py"]
 #### RUN apt-get update
 #### RUN pip install html
 #### RUN pip install nginx
-В данной практике мы создаем излишек слоёв и конечно не используем постоянные версии библиотек
-
+В данной практике мы используем несколько отдельных RUN
+Каждый RUN создаёт отдельный слой образ становится больше и дольше собирается
 Так же нет очистки кеша, что забивает память
-
-#### СOPY . /app
+Установка ненужных пакетов Приложение не использует Nginx, но пакет занимает место и увеличивает образ.
+#### СOPY app/ /app
 копируютя все файлы
 
-#### CMD ["python", "/.../main.py"]
+#### CMD ["python", "/app/main.py"]
 В данной практике мы указываем полный путь к файлу и для передачи аргументов придется переписать CMD
 
 Так же нет WORKDIR, то есть не фиксируется рабочая область
+
+Нет очистки кеша После apt-get update не очищается кеш (/var/lib/apt/lists/*) — увеличивает размер образа.
 
 ## Хороший Dockerfile
 
@@ -49,12 +51,14 @@ FROM python:3.11
 WORKDIR /app
 
 COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ ./
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends build-essential gcc && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir -r requirements.txt
 
 ENTRYPOINT ["python"]
 CMD ["app.py"]
@@ -70,6 +74,8 @@ CMD ["app.py"]
 #### RUN apt-get update && \
 ####     apt-get install -y --no-install-recommends build-essential gcc && \
 ####     rm -rf /var/lib/apt/lists/*
+
+Очистка apt-кеша
 
 #### RUN pip install --no-cache-dir -r requirements.txt
 хорошо, потому что пакеты и питон-библиотеки ставятся чисто, без мусора и с кешированием.
