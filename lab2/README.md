@@ -42,6 +42,9 @@ CMD ["python", "/app/main.py"]
 Так же нет WORKDIR, то есть не фиксируется рабочая область
 
 Нет очистки кеша После apt-get update не очищается кеш (/var/lib/apt/lists/*) — увеличивает размер образа.
+### Скрины запуска, запускал на windows через pycharm
+#### Build-log
+<img width="1689" height="996" alt="image" src="https://github.com/user-attachments/assets/3073d037-b2d8-4e1c-bc19-ebf724f2081c" />
 
 ## Хороший Dockerfile
 
@@ -120,6 +123,11 @@ docker run -d --name lab \
   lapp:latest
 ```
 Выше показан хороший пример контейнера без чрезмерных прав, теперь он может слушать порты без управления хоста
+
+### Скрины запуска, запускал на windows через pycharm
+#### Build-log
+<img width="1699" height="1027" alt="image" src="https://github.com/user-attachments/assets/96a34a37-d8c4-4e7a-a1f6-819a9e6bf916" />
+
 
 ## Выводы
 Во время выполнения лабораторной работы я узнал как ограничивать потребление ЦП контейнером т.к. при чрезмерном потреблении ПК мог лагать
